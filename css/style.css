@@ -1,0 +1,932 @@
+/* ==========================================
+   喫茶しふぉん スタイルシート
+   Cafe Chiffon - Style Sheet
+   ========================================== */
+
+/* ==========================================
+   カラーパレットとデザイントークン
+   ========================================== */
+:root {
+    /* カフェカラー */
+    --cream: #FAF3E0;
+    /* クリーム・ラテの泡 */
+    --coffee: #6F4E37;
+    /* 濃厚なコーヒーブラウン */
+    --caramel: #C19A6B;
+    /* キャラメルアクセント */
+    --mocha: #4A3428;
+    /* ダークモカ */
+    --foam: #FFFBF0;
+    /* 明るい泡ホワイト */
+    --puddle: #B8D4E8;
+    /* 水たまりブルー */
+    --puddle-soft: #D4E8F0;
+    /* 柔らかい水たまり */
+
+    /* グラデーション */
+    --gradient-warm: linear-gradient(135deg, var(--cream) 0%, var(--caramel) 100%);
+    --gradient-coffee: linear-gradient(180deg, var(--coffee) 0%, var(--mocha) 100%);
+
+    /* 影 */
+    --shadow-sm: 0 2px 8px rgba(111, 78, 55, 0.08);
+    --shadow-md: 0 4px 16px rgba(111, 78, 55, 0.12);
+    --shadow-lg: 0 8px 32px rgba(111, 78, 55, 0.16);
+
+    /* 角丸（曲線美） */
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 32px;
+    --radius-xl: 48px;
+
+    /* スペーシング */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 3rem;
+    --space-xl: 4rem;
+}
+
+/* ==========================================
+   リセットとベーススタイル
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Zen Maru Gothic', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: var(--cream);
+    color: var(--mocha);
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================================
+   背景の水たまりブロブ
+   ========================================== */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    opacity: 0.25;
+    /* 少し濃くして目立たせる */
+    filter: blur(40px);
+    animation: blob-float 20s ease-in-out infinite;
+}
+
+.blob-1 {
+    width: 500px;
+    height: 500px;
+    background: #D4C4A8;
+    /* ベージュ系 */
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    width: 400px;
+    height: 400px;
+    background: var(--caramel);
+    top: 50%;
+    right: -5%;
+    animation-delay: -7s;
+}
+
+.blob-3 {
+    width: 450px;
+    height: 450px;
+    background: #E8DCC8;
+    /* クリーム系 */
+    bottom: -10%;
+    left: 30%;
+    animation-delay: -14s;
+}
+
+@keyframes blob-float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1) rotate(120deg);
+        border-radius: 50% 50% 60% 40% / 30% 60% 40% 70%;
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9) rotate(240deg);
+        border-radius: 60% 40% 50% 50% / 50% 40% 60% 50%;
+    }
+}
+
+/* ==========================================
+   背景曲線レイヤー
+   ========================================== */
+.curved-layers {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.curve-layer {
+    position: absolute;
+    width: 150%;
+    height: 60%;
+    border-radius: 50%;
+    opacity: 0.08;
+}
+
+.curve-layer-1 {
+    background: linear-gradient(135deg, var(--caramel) 0%, var(--coffee) 100%);
+    top: -20%;
+    right: -30%;
+    transform: rotate(-15deg);
+}
+
+.curve-layer-2 {
+    background: linear-gradient(225deg, #D4C4A8 0%, var(--cream) 100%);
+    /* ベージュ〜クリーム */
+    bottom: -25%;
+    left: -25%;
+    transform: rotate(20deg);
+}
+
+/* ==========================================
+   メインコンテナ
+   ========================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-md);
+    position: relative;
+    z-index: 1;
+}
+
+/* ==========================================
+   ヒーローセクション
+   ========================================== */
+.hero {
+    text-align: center;
+    padding: var(--space-xl) var(--space-md);
+    position: relative;
+    margin-bottom: var(--space-lg);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.logo-circle {
+    width: 400px;
+    height: 120px;
+    margin: 0 auto var(--space-md);
+    background: transparent;
+    /* 背景を透明に */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    /* 影も削除 */
+    animation: gentle-bounce 3s ease-in-out infinite;
+}
+
+.logo-icon {
+    font-size: 4rem;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0;
+}
+
+@keyframes gentle-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.cafe-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--coffee);
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.05em;
+}
+
+.cafe-subtitle {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.5rem;
+    color: var(--caramel);
+    font-weight: 400;
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.1em;
+}
+
+.welcome-text {
+    font-size: 1.1rem;
+    color: var(--coffee);
+    opacity: 0.8;
+}
+
+/* 湯気のアニメーション */
+.steam-container {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+.steam {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 8px;
+    height: 60px;
+    background: linear-gradient(to top, var(--caramel), transparent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: steam-rise 4s ease-in-out infinite;
+}
+
+.steam-1 {
+    animation-delay: 0s;
+    left: 40%;
+}
+
+.steam-2 {
+    animation-delay: 1.3s;
+    left: 50%;
+}
+
+.steam-3 {
+    animation-delay: 2.6s;
+    left: 60%;
+}
+
+@keyframes steam-rise {
+    0% {
+        transform: translateY(0) translateX(-50%) scale(1);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-100px) translateX(-50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ==========================================
+   セクション共通スタイル
+   ========================================== */
+.about-section,
+.menu-section {
+    margin-bottom: var(--space-xl);
+    animation: fade-in-up 0.8s ease-out;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 2.5rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-sm);
+    font-weight: 600;
+}
+
+.title-underline {
+    width: 80px;
+    height: 4px;
+    background: var(--gradient-warm);
+    margin: 0 auto;
+    border-radius: var(--radius-sm);
+}
+
+/* ==========================================
+   店長プロフィールセクション
+   ========================================== */
+.owner-section {
+    margin-bottom: var(--space-xl);
+    animation: fade-in-up 0.8s ease-out;
+}
+
+.owner-card {
+    background: var(--foam);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid rgba(193, 154, 107, 0.15);
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    transition: all 0.3s ease;
+}
+
+.owner-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--caramel);
+}
+
+.owner-image-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.owner-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--caramel);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+}
+
+.owner-card:hover .owner-image {
+    transform: scale(1.05);
+}
+
+.owner-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: var(--gradient-warm);
+    color: var(--mocha);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    font-family: 'Zen Maru Gothic', sans-serif;
+}
+
+.owner-info {
+    flex: 1;
+}
+
+.owner-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 2rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+}
+
+.owner-title {
+    font-size: 1rem;
+    color: var(--caramel);
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+}
+
+.owner-message {
+    color: var(--mocha);
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+/* ==========================================
+   Aboutセクション
+   ========================================== */
+.about-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+}
+
+.about-card {
+    background: var(--foam);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(193, 154, 107, 0.1);
+}
+
+.about-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--caramel);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-sm);
+    text-align: center;
+}
+
+.card-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.5rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+    font-weight: 600;
+}
+
+.card-text {
+    color: var(--mocha);
+    line-height: 1.8;
+    opacity: 0.9;
+    text-align: center;
+}
+
+/* ==========================================
+   アバターメニューセクション
+   ========================================== */
+.avatar-section {
+    margin-bottom: var(--space-xl);
+    animation: fade-in-up 0.8s ease-out;
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+}
+
+.avatar-card {
+    background: var(--foam);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(193, 154, 107, 0.1);
+    text-align: center;
+}
+
+.avatar-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--caramel);
+}
+
+.avatar-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* 正方形 */
+    margin-bottom: var(--space-sm);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--cream);
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.avatar-card:hover .avatar-image {
+    transform: scale(1.05);
+}
+
+.avatar-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.3rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+}
+
+.avatar-description {
+    color: var(--mocha);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+/* ==========================================
+   メニューセクション（リンク集）
+   ========================================== */
+.menu-description {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-lg);
+    opacity: 0.8;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-md);
+}
+
+.link-card {
+    background: var(--foam);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    display: block;
+}
+
+.link-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, #E8DCC8 0%, transparent 70%);
+    /* クリーム系に変更 */
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: 0;
+    opacity: 0;
+}
+
+.link-card:hover::before {
+    width: 300px;
+    height: 300px;
+    opacity: 0.3;
+}
+
+.link-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--caramel);
+    /* 茶色（キャラメル）に変更 */
+}
+
+.link-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.link-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.3rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.link-description {
+    color: var(--mocha);
+    margin-bottom: var(--space-sm);
+    opacity: 0.8;
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+}
+
+.link-address {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--gradient-warm);
+    color: var(--mocha);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* ==========================================
+   ページヘッダー（サブページ用）
+   ========================================== */
+.page-header {
+    padding: var(--space-md) 0;
+    margin-bottom: var(--space-md);
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--coffee);
+    text-decoration: none;
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background: var(--foam);
+    color: var(--caramel);
+}
+
+/* ==========================================
+   ガイドラインセクション
+   ========================================== */
+.guidelines-section {
+    margin-bottom: var(--space-xl);
+}
+
+.guidelines-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.guideline-card {
+    background: var(--foam);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid rgba(193, 154, 107, 0.1);
+}
+
+.guideline-heading {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.5rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-sm);
+    font-weight: 600;
+}
+
+.guideline-text {
+    color: var(--mocha);
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.guideline-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.guideline-list li {
+    position: relative;
+    padding-left: 1.5em;
+    margin-bottom: 0.8em;
+    color: var(--mocha);
+    line-height: 1.6;
+}
+
+.guideline-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--caramel);
+    font-weight: bold;
+}
+
+.guideline-notice {
+    background: rgba(193, 154, 107, 0.1);
+    border-color: var(--caramel);
+}
+
+.guideline-notice .guideline-text {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Q&Aスタイル */
+.qa-item {
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(193, 154, 107, 0.2);
+}
+
+.qa-item:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.qa-question {
+    color: var(--coffee);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.qa-answer {
+    color: var(--mocha);
+    padding-left: 1.5rem;
+    opacity: 0.9;
+}
+
+.qa-answer a {
+    color: var(--coffee);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.qa-answer a:hover {
+    color: var(--caramel);
+}
+
+/* ==========================================
+   フッター
+   ========================================== */
+.footer {
+    text-align: center;
+    padding: var(--space-lg) var(--space-md);
+    margin-top: var(--space-xl);
+    border-top: 2px solid rgba(193, 154, 107, 0.2);
+}
+
+.footer-text {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.2rem;
+    color: var(--coffee);
+    margin-bottom: var(--space-sm);
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: var(--caramel);
+    opacity: 0.7;
+}
+
+/* ==========================================
+   レスポンシブデザイン
+   ========================================== */
+
+/* タブレット */
+@media (max-width: 768px) {
+    .cafe-name {
+        font-size: 2.5rem;
+    }
+
+    .cafe-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .links-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* タブレットは2カラム */
+    }
+
+    .container {
+        padding: var(--space-sm);
+    }
+
+    /* 店長プロフィール - タブレット */
+    .owner-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .owner-image {
+        width: 160px;
+        height: 160px;
+    }
+
+    /* アバターグリッド - タブレット */
+    .avatar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* モバイル */
+@media (max-width: 480px) {
+    :root {
+        --space-xl: 2.5rem;
+        --space-lg: 2rem;
+    }
+
+    .cafe-name {
+        font-size: 2rem;
+    }
+
+    .cafe-subtitle {
+        font-size: 1rem;
+    }
+
+    .logo-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .logo-icon {
+        font-size: 3rem;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .about-card,
+    .link-card {
+        padding: var(--space-md);
+    }
+
+    .blob {
+        filter: blur(30px);
+    }
+
+    /* 店長プロフィール - モバイル */
+    .owner-image {
+        width: 140px;
+        height: 140px;
+    }
+
+    .owner-name {
+        font-size: 1.6rem;
+    }
+
+    /* アバターグリッド - モバイル */
+    .avatar-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* リンクグリッド - モバイル */
+    .links-grid {
+        grid-template-columns: 1fr;
+        /* モバイルは1カラム */
+    }
+}
+
+/* ==========================================
+   アクセシビリティとユーティリティ
+   ========================================== */
+
+/* フォーカス表示 */
+a:focus,
+button:focus {
+    outline: 3px solid var(--puddle);
+    outline-offset: 2px;
+}
+
+/* 選択テキストのスタイル */
+::selection {
+    background: var(--puddle);
+    color: var(--mocha);
+}
+
+/* スムーズスクロール用のアンカー調整 */
+section {
+    scroll-margin-top: var(--space-md);
+}
