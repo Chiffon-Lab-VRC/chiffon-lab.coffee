@@ -554,6 +554,10 @@ body {
     font-size: 0.9rem;
     line-height: 1.6;
     opacity: 0.85;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ==========================================
@@ -825,8 +829,8 @@ body {
     }
 
     .links-grid {
-        grid-template-columns: repeat(2, 1fr);
-        /* タブレットは2カラム */
+        grid-template-columns: 1fr;
+        /* タブレットも1カラム */
     }
 
     .container {
@@ -846,7 +850,7 @@ body {
 
     /* アバターグリッド - タブレット */
     .avatar-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
@@ -866,8 +870,8 @@ body {
     }
 
     .logo-circle {
-        width: 100px;
-        height: 100px;
+        width: 280px;
+        height: 85px;
     }
 
     .logo-icon {
